@@ -1,7 +1,7 @@
 {
-  "version": "Bot API 6.6",
-  "release_date": "March 9, 2023",
-  "changelog": "https://core.telegram.org/bots/api#march-9-2023",
+  "version": "Bot API 6.8",
+  "release_date": "August 18, 2023",
+  "changelog": "https://core.telegram.org/bots/api#august-18-2023",
   "methods": {
     "getUpdates": {
       "name": "getUpdates",
@@ -3424,6 +3424,27 @@
         }
       ]
     },
+    "unpinAllGeneralForumTopicMessages": {
+      "name": "unpinAllGeneralForumTopicMessages",
+      "href": "https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages",
+      "description": [
+        "Use this method to clear the list of pinned messages in a General forum topic. The bot must be an administrator in the chat for this to work and must have the can_pin_messages administrator right in the supergroup. Returns True on success."
+      ],
+      "returns": [
+        "Boolean"
+      ],
+      "fields": [
+        {
+          "name": "chat_id",
+          "types": [
+            "Integer",
+            "String"
+          ],
+          "required": true,
+          "description": "Unique identifier for the target chat or username of the target supergroup (in the format @supergroupusername)"
+        }
+      ]
+    },
     "answerCallbackQuery": {
       "name": "answerCallbackQuery",
       "href": "https://core.telegram.org/bots/api#answercallbackquery",
@@ -3558,6 +3579,54 @@
           "required": false,
           "description": "A JSON-serialized object, describing scope of users. Defaults to BotCommandScopeDefault."
         },
+        {
+          "name": "language_code",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "A two-letter ISO 639-1 language code or an empty string"
+        }
+      ]
+    },
+    "setMyName": {
+      "name": "setMyName",
+      "href": "https://core.telegram.org/bots/api#setmyname",
+      "description": [
+        "Use this method to change the bot's name. Returns True on success."
+      ],
+      "returns": [
+        "Boolean"
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "New bot name; 0-64 characters. Pass an empty string to remove the dedicated name for the given language."
+        },
+        {
+          "name": "language_code",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "A two-letter ISO 639-1 language code. If empty, the name will be shown to all users for whose language there is no dedicated name."
+        }
+      ]
+    },
+    "getMyName": {
+      "name": "getMyName",
+      "href": "https://core.telegram.org/bots/api#getmyname",
+      "description": [
+        "Use this method to get the current bot name for the given user language. Returns BotName on success."
+      ],
+      "returns": [
+        "BotName"
+      ],
+      "fields": [
         {
           "name": "language_code",
           "types": [
@@ -4770,7 +4839,7 @@
             "Boolean"
           ],
           "required": false,
-          "description": "Pass True if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query"
+          "description": "Pass True if results may be cached on the server side only for the user that sent the query. By default, results may be returned to any user who sends the same query."
         },
         {
           "name": "next_offset",
@@ -4781,20 +4850,12 @@
           "description": "Pass the offset that a client should send in the next query with the same text to receive more results. Pass an empty string if there are no more results or if you don't support pagination. Offset length can't exceed 64 bytes."
         },
         {
-          "name": "switch_pm_text",
+          "name": "button",
           "types": [
-            "String"
+            "InlineQueryResultsButton"
           ],
           "required": false,
-          "description": "If passed, clients will display a button with specified text that switches the user to a private chat with the bot and sends the bot a start message with the parameter switch_pm_parameter"
-        },
-        {
-          "name": "switch_pm_parameter",
-          "types": [
-            "String"
-          ],
-          "required": false,
-          "description": "Deep-linking parameter for the /start message sent to the bot when user presses the switch button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed. Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
+          "description": "A JSON-serialized object describing a button to be shown above inline query results"
         }
       ]
     },
@@ -5931,6 +5992,14 @@
           "description": "Optional. Custom emoji identifier of emoji status of the other party in a private chat. Returned only in getChat."
         },
         {
+          "name": "emoji_status_expiration_date",
+          "types": [
+            "Integer"
+          ],
+          "required": false,
+          "description": "Optional. Expiration date of the emoji status of the other party in a private chat, if any. Returned only in getChat."
+        },
+        {
           "name": "bio",
           "types": [
             "String"
@@ -6298,6 +6367,14 @@
           ],
           "required": false,
           "description": "Optional. Message is a sticker, information about the sticker"
+        },
+        {
+          "name": "story",
+          "types": [
+            "Story"
+          ],
+          "required": false,
+          "description": "Optional. Message is a forwarded story"
         },
         {
           "name": "video",
@@ -7003,6 +7080,13 @@
         }
       ]
     },
+    "Story": {
+      "name": "Story",
+      "href": "https://core.telegram.org/bots/api#story",
+      "description": [
+        "This object represents a message about a forwarded story in the chat. Currently holds no information."
+      ]
+    },
     "Video": {
       "name": "Video",
       "href": "https://core.telegram.org/bots/api#video",
@@ -7305,12 +7389,20 @@
           "description": "Unique poll identifier"
         },
         {
+          "name": "voter_chat",
+          "types": [
+            "Chat"
+          ],
+          "required": false,
+          "description": "Optional. The chat that changed the answer to the poll, if the voter is anonymous"
+        },
+        {
           "name": "user",
           "types": [
             "User"
           ],
-          "required": true,
-          "description": "The user, who changed the answer to the poll"
+          "required": false,
+          "description": "Optional. The user that changed the answer to the poll, if the voter isn't anonymous"
         },
         {
           "name": "option_ids",
@@ -7318,7 +7410,7 @@
             "Array of Integer"
           ],
           "required": true,
-          "description": "0-based identifiers of answer options, chosen by the user. May be empty if the user retracted their vote."
+          "description": "0-based identifiers of chosen answer options. May be empty if the vote was retracted."
         }
       ]
     },
@@ -7772,7 +7864,17 @@
       "name": "WriteAccessAllowed",
       "href": "https://core.telegram.org/bots/api#writeaccessallowed",
       "description": [
-        "This object represents a service message about a user allowing a bot added to the attachment menu to write messages. Currently holds no information."
+        "This object represents a service message about a user allowing a bot to write messages after adding the bot to the attachment menu or launching a Web App from a link."
+      ],
+      "fields": [
+        {
+          "name": "web_app_name",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "Optional. Name of the Web App which was launched from a link"
+        }
       ]
     },
     "VideoChatScheduled": {
@@ -8261,7 +8363,7 @@
             "String"
           ],
           "required": false,
-          "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted. Note: This offers an easy way for users to start using your bot in inline mode when they are currently in a private chat with it. Especially useful when combined with switch_pm... actions - in this case the user will be automatically returned to the chat they switched from, skipping the chat selection screen."
+          "description": "Optional. If set, pressing the button will prompt the user to select one of their chats, open that chat and insert the bot's username and the specified inline query in the input field. May be empty, in which case just the bot's username will be inserted."
         },
         {
           "name": "switch_inline_query_current_chat",
@@ -8270,6 +8372,14 @@
           ],
           "required": false,
           "description": "Optional. If set, pressing the button will insert the bot's username and the specified inline query in the current chat's input field. May be empty, in which case only the bot's username will be inserted. This offers a quick way for the user to open your bot in inline mode in the same chat - good for selecting something from multiple options."
+        },
+        {
+          "name": "switch_inline_query_chosen_chat",
+          "types": [
+            "SwitchInlineQueryChosenChat"
+          ],
+          "required": false,
+          "description": "Optional. If set, pressing the button will prompt the user to select one of their chats of the specified type, open that chat and insert the bot's username and the specified inline query in the input field"
         },
         {
           "name": "callback_game",
@@ -8328,6 +8438,55 @@
           ],
           "required": false,
           "description": "Optional. Pass True to request the permission for your bot to send messages to the user."
+        }
+      ]
+    },
+    "SwitchInlineQueryChosenChat": {
+      "name": "SwitchInlineQueryChosenChat",
+      "href": "https://core.telegram.org/bots/api#switchinlinequerychosenchat",
+      "description": [
+        "This object represents an inline button that switches the current user to inline mode in a chosen chat, with an optional default inline query."
+      ],
+      "fields": [
+        {
+          "name": "query",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "Optional. The default inline query to be inserted in the input field. If left empty, only the bot's username will be inserted"
+        },
+        {
+          "name": "allow_user_chats",
+          "types": [
+            "Boolean"
+          ],
+          "required": false,
+          "description": "Optional. True, if private chats with users can be chosen"
+        },
+        {
+          "name": "allow_bot_chats",
+          "types": [
+            "Boolean"
+          ],
+          "required": false,
+          "description": "Optional. True, if private chats with bots can be chosen"
+        },
+        {
+          "name": "allow_group_chats",
+          "types": [
+            "Boolean"
+          ],
+          "required": false,
+          "description": "Optional. True, if group and supergroup chats can be chosen"
+        },
+        {
+          "name": "allow_channel_chats",
+          "types": [
+            "Boolean"
+          ],
+          "required": false,
+          "description": "Optional. True, if channel chats can be chosen"
         }
       ]
     },
@@ -9163,6 +9322,14 @@
           ],
           "required": false,
           "description": "Optional. Chat invite link, which was used by the user to join the chat; for joining by invite link events only."
+        },
+        {
+          "name": "via_chat_folder_invite_link",
+          "types": [
+            "Boolean"
+          ],
+          "required": false,
+          "description": "Optional. True, if the user joined the chat via a chat folder invite link"
         }
       ]
     },
@@ -9631,6 +9798,23 @@
       ],
       "subtype_of": [
         "BotCommandScope"
+      ]
+    },
+    "BotName": {
+      "name": "BotName",
+      "href": "https://core.telegram.org/bots/api#botname",
+      "description": [
+        "This object represents the bot's name."
+      ],
+      "fields": [
+        {
+          "name": "name",
+          "types": [
+            "String"
+          ],
+          "required": true,
+          "description": "The bot's name"
+        }
       ]
     },
     "BotDescription": {
@@ -10549,6 +10733,39 @@
           ],
           "required": false,
           "description": "Optional. Sender location, only for bots that request user location"
+        }
+      ]
+    },
+    "InlineQueryResultsButton": {
+      "name": "InlineQueryResultsButton",
+      "href": "https://core.telegram.org/bots/api#inlinequeryresultsbutton",
+      "description": [
+        "This object represents a button to be shown above inline query results. You must use exactly one of the optional fields."
+      ],
+      "fields": [
+        {
+          "name": "text",
+          "types": [
+            "String"
+          ],
+          "required": true,
+          "description": "Label text on the button"
+        },
+        {
+          "name": "web_app",
+          "types": [
+            "WebAppInfo"
+          ],
+          "required": false,
+          "description": "Optional. Description of the Web App that will be launched when the user presses the button. The Web App will be able to switch back to the inline mode using the method switchInlineQuery inside the Web App."
+        },
+        {
+          "name": "start_parameter",
+          "types": [
+            "String"
+          ],
+          "required": false,
+          "description": "Optional. Deep-linking parameter for the /start message sent to the bot when a user presses the button. 1-64 characters, only A-Z, a-z, 0-9, _ and - are allowed. Example: An inline bot that sends YouTube videos can ask the user to connect the bot to their YouTube account to adapt search results accordingly. To do this, it displays a 'Connect your YouTube account' button above the results, or even before showing any. The user presses the button, switches to a private chat with the bot and, in doing so, passes a start parameter that instructs the bot to return an OAuth link. Once done, the bot can offer a switch_inline button so that the user can easily return to the chat where they wanted to use the bot's inline capabilities."
         }
       ]
     },
